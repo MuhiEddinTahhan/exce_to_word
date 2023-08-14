@@ -13,13 +13,14 @@ def excel_to_word(excel_file, sheet_name, row_indices, output_file):
     for row_index in row_indices:
         row = df.iloc[row_index]
         # Add a new paragraph for each row
-        doc.add_paragraph()
+        paragraph = doc.add_paragraph()
 
         # Add each cell value to the corresponding column in the Word document
-        for column_name, cell_value in row.iteritems():
-            doc.add_run(f"{column_name}: ").bold = True  # Bold column name
-            doc.add_run(str(cell_value)).bold = False   # Regular cell value
-            doc.add_run("\n")  # Add a new line after each cell value
+        for column_name, cell_value in row.items():
+            run = paragraph.add_run(f"{column_name}: ")
+            run.bold = True  # Bold column name
+            paragraph.add_run(str(cell_value))  # Regular cell value
+            paragraph.add_run("\n")  # Add a new line after each cell value
 
     # Save the Word document
     doc.save(output_file)
@@ -27,9 +28,9 @@ def excel_to_word(excel_file, sheet_name, row_indices, output_file):
 
 if __name__ == "__main__":
     # Replace these file paths with your actual paths
-    excel_file_path = "path/to/your/excel_file.xlsx"
+    excel_file_path = r"your/path/here.xlsx"
     sheet_name = "Sheet1"  # Replace with the sheet name containing the data
     row_indices = [0, 2, 4]  # Replace with the row indices you want to include
-    output_file_path = "path/to/output/word_file.docx"
+    output_file_path = r"your/path/here.docx"
 
     excel_to_word(excel_file_path, sheet_name, row_indices, output_file_path)
